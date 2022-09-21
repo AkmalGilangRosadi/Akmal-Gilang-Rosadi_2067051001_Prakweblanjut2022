@@ -4,12 +4,13 @@ namespace App\Controllers;
 
 use App\Controllers\BaseController;
 use App\Models\Mahasiswa;
+use App\Models\MahasiswaModel;
 
 class MahasiswaController extends BaseController
 {
     public function index()
     {
-        $mahasiswaModel = new Mahasiswa();
+        $mahasiswaModel = new MahasiswaModel();
         $mahasiswa = $mahasiswaModel->findAll();
         $data = [
             'title' => 'Mahasiswa',
@@ -35,29 +36,28 @@ class MahasiswaController extends BaseController
 
     public function store()
     {
-        if (!$this->validate(
-            [
-                'npm' => 'required',
-                'nama' => 'required',
-                'alamat' => 'required'
-            ]
-        )) {
+        if (!$this->validate([
+            'npm' => 'required',
+            'nama' => 'required',
+            'alamat' => 'required'
+        ])) {
             return redirect()->to('/create');
         }
-        $mahasiswaModel = new Mahasiswa();
+
+        $mahasiswaModel = new MahasiswaModel();
         $data = [
             'npm' => $this->request->getPost('npm'),
             'nama' => $this->request->getPost('nama'),
             'alamat' => $this->request->getPost('alamat')
         ];
-        $mahasiswaModel->save($data);
 
+        $mahasiswaModel->save($data);
         return redirect()->to('/mahasiswa');
     }
 
     public function delete($id)
     {
-        $mahasiswaModel = new Mahasiswa();
+        $mahasiswaModel = new MahasiswaModel();
         $mahasiswaModel->delete($id);
 
         return redirect()->to('/mahasiswa');
@@ -65,13 +65,13 @@ class MahasiswaController extends BaseController
 
     public function edit($id)
     {
-        $mahasiswaModel = new Mahasiswa();
+        $mahasiswaModel = new MahasiswaModel();
         $mahasiswa = $mahasiswaModel->find($id);
 
-        $data =
-            [
-                'title' => 'Edit Mahasiswa'
-            ];
+        $data = [
+            'title' => 'Edit Mahasiswa'
+        ];
+
         return view('templates/header', $data)
             . view('mahasiswa/edit', $mahasiswa)
             . view('templates/footer');
@@ -79,23 +79,22 @@ class MahasiswaController extends BaseController
 
     public function update($id)
     {
-        if (!$this->validate(
-            [
-                'npm' => 'required',
-                'nama' => 'required',
-                'alamat' => 'required'
-            ]
-        )) {
+        if (!$this->validate([
+            'npm' => 'required',
+            'nama' => 'required',
+            'alamat' => 'required'
+        ])) {
             return redirect()->to('/edit/' . $id);
         }
-        $mahasiswaModel = new Mahasiswa();
+
+        $mahasiswaModel = new MahasiswaModel();
         $data = [
             'npm' => $this->request->getVar('npm'),
             'nama' => $this->request->getVar('nama'),
             'alamat' => $this->request->getVar('alamat')
         ];
-        $mahasiswaModel->update($id, $data);
 
+        $mahasiswaModel->update($id, $data);
         return redirect()->to('/mahasiswa');
     }
 }

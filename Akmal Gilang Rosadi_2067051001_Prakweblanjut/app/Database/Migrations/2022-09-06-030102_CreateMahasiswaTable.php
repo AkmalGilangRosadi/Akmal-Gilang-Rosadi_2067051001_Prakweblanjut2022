@@ -26,7 +26,7 @@ class CreateMahasiswaTable extends Migration
             'alamat' => [
                 'type'       => 'TEXT',
             ],
-            'creater_at' => [
+            'created_at' => [
                 'type'       => 'DATETIME',
                 'null'       => 'true',
             ],
