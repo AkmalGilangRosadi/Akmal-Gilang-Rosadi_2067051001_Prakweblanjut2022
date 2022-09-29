@@ -3,53 +3,25 @@
 namespace App\Controllers;
 
 use App\Controllers\BaseController;
-use App\Models\MahasiswaModel;
+use App\Models\Mahasiswa;
+
 
 class Pages extends BaseController
 {
     public function index()
     {
-        return view('welcome_message');
+        return view('index');
     }
 
-    public function home()
+    public function view($page = 'home')
     {
-        $data['title'] = "Home";
-        return view('templates/header', $data)
-        . view('pages/home')
-        . view ('templates/footer');
-    }
+        if (!is_file(APPPATH . 'Views/pages/' . $page . '.php')) {
+            // Whoops, we don't have a page for that!
+            throw new \CodeIgniter\Exceptions\PageNotFoundException($page);
+        }
 
-    public function create(){
-        $data = ['title' => "Create"];
-        return view('templates/header', $data)
-            . view('mahasiswa/create')
-            . view('templates/footer');
-    }
+        $data['title'] = ucfirst($page); // Capitalize the first letter
 
-    public function about()
-    {
-        $data['title'] = "About";
-        return view('templates/header', $data)
-        . view('pages/about')
-        . view ('templates/footer');
-    }
-
-    public function mahasiswa()
-    {
-        $mahasiswaModel = new MahasiswaModel();
-        $mahasiswa = $mahasiswaModel->findAll();
-        $data = [
-            'title' => "Mahasiswa",
-            'mahasiswa' => $mahasiswa
-        ];
-
-        return view('templates/header', $data)
-        . view('pages/mahasiswa', $data)
-        . view ('templates/footer');
-    }
-
-    public function test(){
-        dd('test');
+        return view('pages/' . $page, $data);
     }
 }

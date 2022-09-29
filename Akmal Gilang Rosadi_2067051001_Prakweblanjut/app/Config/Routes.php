@@ -41,7 +41,7 @@ $routes->get('/create', 'MahasiswaController::create');
 $routes->post('/store', 'MahasiswaController::store');
 $routes->get('/edit/(:num)', 'MahasiswaController::edit/$1');
 $routes->post('/update/(:num)', 'MahasiswaController::update/$1');
-$routes->delete('/delete/(:num)', 'MahasiswaController::delete/$1');
+$routes->post('/delete/(:num)', 'MahasiswaController::delete/$1');
 $routes->get('/index', 'Pages::index');
 $routes->get('(:any)', 'Pages::view/$1');
 
